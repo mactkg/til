@@ -2,7 +2,7 @@ import SwiftUI
 
 struct ButtonContentView: View {
     var body: some View {
-        VStack {
+        VStack(spacing: 16) {
             /// シンプルなボタン。
             /// .padding で余白が追加できる。
             Button("Simple Button") {
@@ -50,6 +50,7 @@ struct ButtonContentView: View {
             .clipShape(Circle())
 
         }
+        .padding(8)
     }
 }
 
