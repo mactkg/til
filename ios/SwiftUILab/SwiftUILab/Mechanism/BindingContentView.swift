@@ -1,24 +1,28 @@
 import SwiftUI
 
-/// `@Binding` を使うことで、親から子に状態を渡せる。
+/// `@Binding` を使うと値が接続 - バインド - されて、受け取った値を子から変更できるようになる。
 /// Sliderも `@Binding` を受け取るようになっていて、Sliderの中から値を変更できる。
-/// Bindingを使えば双方向に値をやり取りできるということ。
 struct ColorSliders: View {
     @Binding var red: Double
     @Binding var green: Double
     @Binding var blue: Double
 
     var body: some View {
-        VStack {
-            HStack {
+        Grid(alignment: .leading) {
+            GridRow {
+                Text("Color Slider")
+                    .gridCellColumns(2)
+                    .font(.headline)
+            }
+            GridRow {
                 Text("Red")
                 Slider(value: $red, in: 0...1)
             }
-            HStack {
+            GridRow {
                 Text("Green")
                 Slider(value: $green, in: 0...1)
             }
-            HStack {
+            GridRow {
                 Text("Blue")
                 Slider(value: $blue, in: 0...1)
             }
@@ -27,10 +31,12 @@ struct ColorSliders: View {
     }
 }
 
+/// 一方、このViewのように値を利用するだけで変更しない場合は、 `@Binding` を使う必要がない。
+/// 素朴なView Componentとして作ればOK。
 struct ColorDebugView: View {
-    @Binding var red: Double
-    @Binding var green: Double
-    @Binding var blue: Double
+    var red: Double
+    var green: Double
+    var blue: Double
 
     var body: some View {
         VStack {
@@ -41,8 +47,9 @@ struct ColorDebugView: View {
     }
 }
 
-/// 状態は `@State` で管理できる。 `@Binding` を使うことで、親から子に状態を渡せる。
-/// `$val` の形式にすることで、Bindingとして渡せる。
+
+/// 状態は `@State` で管理できる。 `@State` で管理している値はSwiftUIが監視していて、変更があれば適宜再描画を行なってくれる。
+/// 子コンポーネントで値を変更する場合は `@Binding` として値を渡す必要があり、 `$val` と表記して渡す。
 struct BindingContentView: View {
     @State private var red: Double = 0.5
     @State private var green: Double = 0.5
@@ -55,9 +62,11 @@ struct BindingContentView: View {
                 .frame(width: 100, height: 100)
                 .clipShape(RoundedRectangle(cornerRadius: 12))
 
+            /// `@Binding` として渡す例
             ColorSliders(red: $red, green: $green, blue: $blue)
 
-            ColorDebugView(red: $red, green: $green, blue: $blue)
+            /// 普通の値として渡す例
+            ColorDebugView(red: red, green: green, blue: blue)
         }
         .safeAreaPadding(8)
     }
