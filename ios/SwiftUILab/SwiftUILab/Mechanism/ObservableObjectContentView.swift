@@ -1,8 +1,12 @@
 import SwiftUI
 
+/// ObservableObjectのサンプル
+///
+/// > Warning: iOS17以降はObservable Frameworkが登場し、 `@Observable` が使えるようになった。
+/// > 今後はそちらが主流になりそうなので、 `ObservationContentView` も必ず参考にすること。
+///
 /// ObservableObjectなクラスを作ると、 `@StateObject` や `@ObservedObject` を使って状態管理できる。
 /// 購読できるプロパティは `@Published` をつける。
-/// `Observation` もあるので、そちらも後で試す。
 /// https://www.youtube.com/watch?v=W6FF70H_GwI
 class ObservableColorViewModel: ObservableObject {
     @Published var red: Double = 0.5
@@ -26,7 +30,7 @@ struct ObservableObjectContentView: View {
 
             ColorSliders(red: $vm.red, green: $vm.green, blue: $vm.blue)
 
-            ColorDebugView(red: $vm.red, green: $vm.green, blue: $vm.blue)
+            ColorDebugView(red: vm.red, green: vm.green, blue: vm.blue)
         }
         .safeAreaPadding(8)
     }

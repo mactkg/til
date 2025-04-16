@@ -1,5 +1,7 @@
 import SwiftUI
 
+/// `@State` を使った簡単なUI実装のサンプル。
+///
 /// `@State` を使うことで、値の変化をSwiftUIに通知し、UIに変化をもたせられる。
 /// isOnが変化すると、SwiftUIは自動的にUIを更新する。
 struct StateContentView: View {
@@ -18,6 +20,8 @@ struct StateContentView: View {
 
             /// `isOn` の値によって、ボタンの幅が変化させている
             .frame(maxWidth: isOn ? .infinity : nil)
+
+            /// ここから下はただボタンのスタイルを作ってるだけ
             .foregroundStyle(.myBlack)
             .background(.myBrown)
             .clipShape(RoundedRectangle(cornerRadius: 12))
